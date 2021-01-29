@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="palette.css">
+    <title>Palette</title>
+</head>
+
+<body>
+
+    <div id="colorZone" style="background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);">
+    Palette
+    </div>
+    <div>
+        R
+        <!-- <input type="text" name="rinput"><br> -->
+        G
+        <!-- <input type="text" name="ginput"><br> -->
+        B
+        <!-- <input type="text" name="binput"><br> -->
+    </div>
+    <div>
+        <input type="range" min="0" max="255" id="red" oninput="bar('r',this)">
+        <input type="range" min="0" max="255" id="green" oninput="bar('g',this)">
+        <input type="range" min="0" max="255" id="blue" oninput="bar('b',this)">
+    </div>
+    <div>
+        <input type="button" value="+" onmousedown="cont('add')" onmouseup="clearInterval(run)"
+            onmouseout="clearInterval(run)">
+        <input type="button" value="-" onmousedown="cont('sub')" onmouseup="clearInterval(run)"
+            onmouseout="clearInterval(run)">
+        <input type="button" value="隨機喔" onmousedown="cont('rand')" onmouseup="clearInterval(run)"
+            onmouseout="clearInterval(run)">
+    </div>
+
+
+    <script>
+
+// 16進位
+function hex(num){
+    num = num.toString(16);
+    // console.log(num);
+    return (num.lenght < 2)? '0'+num:num;
+}
+
+// 印出顏色
+function printColor(){
+    const colorZone = document.getElementById("colorZone");
+    colorZone.style.backgroundColor = `rgb(${rgb.r},${rgb.g},${rgb.b})`;
+    // console.log(colorZone.style.backgroundColor);
+    colorZone.style.color = `rgb(${255-rgb.r}${255-rgb.g}${255-rgb.b})`;
+    document.getElementById("red").value=rgb.r;
+    document.getElementById("green").value=rgb.g;
+    document.getElementById("blue").value=rgb.b;
+    colorZone.innerHTML = `#${hex(rgb.r)}${hex(rgb.g)}${hex(rgb.b)}`;
+}
+
+// 單色置換
+// function ask(input){
+
+//     const r=(document.getElementsByTagName('input')[0].value=="")''
+//     const g=document.getElementsByTagName('input')[1].value
+//     const b=document.getElementsByTagName('input')[2].value
+//     console.log(r+g+b);
+// }
+
+
+// 初始化
+let rgb={r:0,g:0,b:0}, run;
+rgb.r = Math.floor((Math.random() * 256));
+rgb.g = Math.floor((Math.random() * 256));
+rgb.b = Math.floor((Math.random() * 256));
+printColor();
+
+// (+)跟(-)
+function cont(select) {
+    run = setInterval(()=>{
+        switch(select){
+            case 'add':
+                console.log(rgb.r);
+                if(rgb.r < 255){rgb.r++};
+                if(rgb.g < 255){rgb.g++};
+                if(rgb.b < 255){rgb.b++};
+                break;
+            case 'sub':
+                if(rgb.r > 0){rgb.r--};
+                if(rgb.g > 0){rgb.g--};
+                if(rgb.b > 0){rgb.b--};
+                break;
+            case 'rand':
+                rgb.r = Math.floor((Math.random() * 256));
+                rgb.g = Math.floor((Math.random() * 256));
+                rgb.b = Math.floor((Math.random() * 256));
+                break;
+        }
+    printColor();
+    }, 16);
+}
+
+function bar(color,bar) {
+    rgb[color] = Number(bar.value);
+    console.log(rgb[color]);
+    printColor();
+}
+
+
+
+</script>
+</body>
+
+</html>
