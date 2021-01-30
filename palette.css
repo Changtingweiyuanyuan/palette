@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Coda+Caption:wght@800&display=swap');
+*{
+    margin:0;
+    padding:0;
+    font-family: 'Coda Caption', sans-serif;
+    overflow:hidden;
+}
+
+input:focus{
+    outline:none;
+}
+
+#colorZone{
+    padding-top:5%;
+    position: relative;
+    z-index:-1;
+    height: 100vh;
+    width:100vw;
+    text-align: center;
+    font-size: 3em;
+}
+
+#mario{
+    position:absolute;
+    width:25%;
+    height:50%;
+    bottom:0;
+    right:0;
+}
+#marioImg{
+    bottom:0;
+    max-height:100%;
+    max-width:100%;
+}
+
+
+#rgbText{
+    z-index:1;
+    width:100%;
+    align-items: center;
+    position:absolute;
+    display: flex;
+    flex-direction: column;
+    top:20%;
+    font-size: 2em;
+}
+#barArea{
+    z-index:1;
+    width:100%;
+    align-items: center;
+    position:absolute;
+    display: flex;
+    flex-direction: column;
+    top:45%;
+}
+#barArea input{
+    width:40%;
+    height:5vh;
+}
+#buttonArea{
+    z-index:1;
+    width:50%;
+    align-items: center;
+    position:absolute;
+    display: flex;
+    justify-content: space-evenly;
+    transform: translate(-50%,0);
+    top:80%;
+    left:50%;
+}
+
+.buttonText{
+    z-index:1;
+    width:100%;
+    position:absolute;
+    top:70%;
+    text-align: center;
+}
+
+.button{
+    opacity: 0;
+    cursor: pointer;
+    width:50px;
+    height:50px;
+}
+
+label{
+    width:100%;
+    height:100px;
+}
+
+label span{
+    position: absolute;
+    cursor: pointer !important;
+    width:70px;
+    height:70px;
+    padding:10px;
+    /* border:1px solid red; */
+}
+.img{
+    filter:drop-shadow(4px 4px 1px #222);
+}

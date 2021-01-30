@@ -9,30 +9,51 @@
 </head>
 
 <body>
+    <div id="mario">
+        <img id="marioImg" src="Mario_Circle.png">
+    </div>
+<div id="colorZone">
+    MARIO PALETTE
+</div>
+    <div id="rgbText">
+        <div><span>R: </span><input class="inputText" type="text" name="rinput" placeholder="0-255" onchange="enter('r')"></div>
+        <div><span>G: </span><input class="inputText" type="text" name="ginput" placeholder="0-255" onchange="enter('g')"></div>
+        <div><span>B: </span><input class="inputText" type="text" name="binput" placeholder="0-255" onchange="enter('b')"></div>
+    </div>
 
-    <div id="colorZone" style="background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);">
-    Palette
-    </div>
-    <div>
-        R
-        <!-- <input type="text" name="rinput"><br> -->
-        G
-        <!-- <input type="text" name="ginput"><br> -->
-        B
-        <!-- <input type="text" name="binput"><br> -->
-    </div>
-    <div>
+    <div id="barArea">
+        <span class="text">USE SCROLL BAR TO SELECT COLORS</span>
         <input type="range" min="0" max="255" id="red" oninput="bar('r',this)">
         <input type="range" min="0" max="255" id="green" oninput="bar('g',this)">
         <input type="range" min="0" max="255" id="blue" oninput="bar('b',this)">
     </div>
-    <div>
-        <input type="button" value="+" onmousedown="cont('add')" onmouseup="clearInterval(run)"
+    <span class="text buttonText">OR YOU CAN LONG PRESS TO INCREASE OR DECREASE COLORS.<br>
+        AND RANDOMLY PRODUCE COLORS
+    </span>
+    <div id="buttonArea">
+        <label>
+            <span>
+                <img class="img" src="mushroom.svg">
+            </span>
+        <input class="button" type="button" value="+" onmousedown="cont('add')" onmouseup="clearInterval(run)"
             onmouseout="clearInterval(run)">
-        <input type="button" value="-" onmousedown="cont('sub')" onmouseup="clearInterval(run)"
+        </label>
+
+        <label>
+            <span>
+                <img class="img" src="star.svg">
+            </span>
+        <input class="button" type="button" value="-" onmousedown="cont('sub')" onmouseup="clearInterval(run)"
             onmouseout="clearInterval(run)">
-        <input type="button" value="隨機喔" onmousedown="cont('rand')" onmouseup="clearInterval(run)"
-            onmouseout="clearInterval(run)">
+        </label>
+        
+        <label>
+            <span>
+                <img class="img" src="random.svg">
+            </span>
+            <input class="button" type="button" value="隨機喔" onmousedown="cont('rand')" onmouseup="clearInterval(run)"
+        onmouseout="clearInterval(run)">
+        </label>
     </div>
 
 
@@ -45,26 +66,29 @@ function hex(num){
     return (num.lenght < 2)? '0'+num:num;
 }
 
-// 印出顏色
+// 印出顏色 要取得hex(rgb{r:???,g:???,b:???})
 function printColor(){
     const colorZone = document.getElementById("colorZone");
+    const text = document.getElementsByClassName("text");
     colorZone.style.backgroundColor = `rgb(${rgb.r},${rgb.g},${rgb.b})`;
     // console.log(colorZone.style.backgroundColor);
-    colorZone.style.color = `rgb(${255-rgb.r}${255-rgb.g}${255-rgb.b})`;
+    colorZone.style.color = `rgb(${255-rgb.r},${255-rgb.g},${255-rgb.b})`;
+    text[0].style.color = `rgb(${255-rgb.r},${255-rgb.g},${255-rgb.b})`;
+    text[1].style.color = `rgb(${255-rgb.r},${255-rgb.g},${255-rgb.b})`;
+    const rbgText = document.querySelectorAll("#rgbText span");
+    const rgbInput = document.querySelectorAll("#rgbText input");
+    for(let i=0;i<rbgText.length;i++){
+    rbgText[i].style.color = `rgb(${255-rgb.r},${255-rgb.g},${255-rgb.b})`;
+    rgbInput[i].style.border = `4px solid rgb(${255-rgb.r},${255-rgb.g},${255-rgb.b})`;
+    }
+
     document.getElementById("red").value=rgb.r;
     document.getElementById("green").value=rgb.g;
     document.getElementById("blue").value=rgb.b;
+    console.log(hex(rgb.r));
     colorZone.innerHTML = `#${hex(rgb.r)}${hex(rgb.g)}${hex(rgb.b)}`;
 }
 
-// 單色置換
-// function ask(input){
-
-//     const r=(document.getElementsByTagName('input')[0].value=="")''
-//     const g=document.getElementsByTagName('input')[1].value
-//     const b=document.getElementsByTagName('input')[2].value
-//     console.log(r+g+b);
-// }
 
 
 // 初始化
@@ -73,6 +97,32 @@ rgb.r = Math.floor((Math.random() * 256));
 rgb.g = Math.floor((Math.random() * 256));
 rgb.b = Math.floor((Math.random() * 256));
 printColor();
+
+
+// 單色置換
+function enter(input){
+    const clr=document.getElementsByClassName('inputText');
+    const r=document.getElementsByClassName('inputText')[0].value;
+    const g=document.getElementsByClassName('inputText')[1].value;
+    const b=document.getElementsByClassName('inputText')[2].value;
+
+    
+    for(let i=0;i<clr.length;i++){
+        while(!(clr[i].value >= 0 && clr[i].value <=255)){
+            alert('只能輸入0-255的數字');
+            return;
+        }
+    }
+    
+    // console.log(rgb.g);
+    rgb.r=(r=='')? rgb.r : r;
+    rgb.g=(g=='')? rgb.g : g;
+    rgb.b=(b=='')? rgb.b : b;
+    // console.log(rgb.g);
+// ＊＊＊＊＊＊為什麼沒有轉十六進位（標題處）＊＊＊＊＊＊
+    printColor();
+}
+
 
 // (+)跟(-)
 function cont(select) {
@@ -95,6 +145,7 @@ function cont(select) {
                 rgb.b = Math.floor((Math.random() * 256));
                 break;
         }
+        // console.log(rgb);
     printColor();
     }, 16);
 }
