@@ -85,8 +85,7 @@ function printColor(){
     document.getElementById("red").value=rgb.r;
     document.getElementById("green").value=rgb.g;
     document.getElementById("blue").value=rgb.b;
-    console.log(hex(rgb.r));
-    colorZone.innerHTML = `#${hex(rgb.r)}${hex(rgb.g)}${hex(rgb.b)}`;
+    colorZone.innerHTML = `#${hex(parseInt(rgb.r))}${hex(parseInt(rgb.g))}${hex(parseInt(rgb.b))}`;
 }
 
 
@@ -110,6 +109,7 @@ function enter(input){
     for(let i=0;i<clr.length;i++){
         while(!(clr[i].value >= 0 && clr[i].value <=255)){
             alert('只能輸入0-255的數字');
+            document.getElementsByClassName('inputText')[0].value('');
             return;
         }
     }
